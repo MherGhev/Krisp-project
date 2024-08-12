@@ -37,6 +37,8 @@ def ftp_file_prefix(namespace):
     the final token replaced by 'ftp'.
     Example: a.b.c => a.b.ftp
     """
+    
+    # Namespace might not contain a dot, so that case should be handled by raising an exception for example
     return ".".join(namespace.split(".")[:-1]) + '.ftp'
 
 
