@@ -1,3 +1,5 @@
+from collections import deque
+
 ############
 # Streaming Payments Processor, two vendors edition.
 #
@@ -57,19 +59,31 @@ def process_payments_2():
     Modify `process_payments_2()`, write glue code that enables
     `store_payments()` to consume payments produced by `stream_payments()`
     """
+
+    payments = deque()
+
+    def my_callback(payment):
+        payments.append(payment)
+
     def payment_generator():
-
-        payments = []
-
-        def my_callback(payment):
-            payments.append(payment)
 
         stream_payments(my_callback)
 
-        for payment in payments:
-            yield payment
+        while len(payments) > 0:
+            yield payments.popleft()
     
     store_payments(payment_generator())
 
 
 process_payments_2()
+
+# Given the current implementation of the library functions, this solution violates the memory rule (We store all of the payments in one queue).
+# If we assume that the stream_payments function is not implemented like this and the payments are streamed (hence added to the queue periodically and asynchronously),
+# this solution makes sense, because if storing takes long and there are a lot of payments, the payments will get inserted to the queue, while the older payments are getting stored.
+# The worst case with this implementation will be that there will be a lot of payments that will get added to the queue at once, and then they will get stored (which violates the memory rule), 
+# but if in the stream_payments() function the payments get streamed asynchronously (which in the real world example is more likely to be the case), the queue will be half-empty, depending on the streaming rate.
+
+# If we try not to violate the memory rule by calling the store_payments() function from the callback function, that means we are violating the first rule,
+# because the store_payments() function gets called for each payment.
+
+

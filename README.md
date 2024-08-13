@@ -31,14 +31,15 @@ This service has an endpoint ```/recommend``` which returns a cached result if t
 
 
 - Clone the repository
-```
-git clone git@github.com:MherGhev/Krisp-project.git
-cd ./part1
+```sh
+$ git clone git@github.com:MherGhev/Krisp-project.git
+$ cd ./part1
 ```
 
 - Build and start the application
-```
-docker-compose up --build
+```sh
+$ docker compose build
+$ docker compose up
 ```
 
 - Access the services
@@ -52,6 +53,3 @@ Send a post request to the generator service like this
 
 ### Notes
 This README is linked to the whole krisp assignment. You can find part1 (the recommendation system), part2 (the problemset) and code review under the main directory.
-
-### Authors
-- Mher Ghevondian

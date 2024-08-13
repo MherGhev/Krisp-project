@@ -23,7 +23,7 @@ def get_value(data, key, default, lookup=None, mapper=None):
 
     if lookup:
         return_value = lookup[return_value]
-    # lookup[return_value] might be undefined, might be a good idea to use the default here alsoa
+    # lookup[return_value] might be undefined, might be a good idea to use the default here also
 
     if mapper:
         return_value = mapper(return_value)
@@ -37,7 +37,7 @@ def ftp_file_prefix(namespace):
     the final token replaced by 'ftp'.
     Example: a.b.c => a.b.ftp
     """
-    
+
     # Namespace might not contain a dot, so that case should be handled by raising an exception for example
     return ".".join(namespace.split(".")[:-1]) + '.ftp'
 
